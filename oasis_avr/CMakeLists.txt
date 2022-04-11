@@ -76,6 +76,7 @@ if (HOST_NAME STREQUAL station)
   set(ENABLE_DIAGNOSTICS ON)
   set(ENABLE_DIGITAL ON)
   set(ENABLE_I2C OFF)
+  set(ENABLE_MPU6050 ON)
   set(ENABLE_ONE_WIRE OFF)
   set(ENABLE_SERVO OFF)
   set(ENABLE_SONAR OFF)
@@ -145,6 +146,7 @@ elseif (HOST_NAME STREQUAL jetson)
   set(ENABLE_DIAGNOSTICS ON)
   set(ENABLE_DIGITAL ON)
   set(ENABLE_I2C ON)
+  set(ENABLE_MPU6050 ON)
   set(ENABLE_ONE_WIRE OFF)
   set(ENABLE_SERVO OFF)
   set(ENABLE_SONAR OFF)
@@ -185,6 +187,7 @@ elseif (HOST_NAME STREQUAL cinder)
   set(ENABLE_DIAGNOSTICS ON)
   set(ENABLE_DIGITAL OFF)
   set(ENABLE_I2C OFF)
+  set(ENABLE_MPU6050 ON)
   set(ENABLE_ONE_WIRE OFF)
   set(ENABLE_SERVO OFF)
   set(ENABLE_SONAR OFF)
@@ -247,6 +250,7 @@ elseif (HOST_NAME STREQUAL nuc OR HOST_NAME STREQUAL starship)
   set(ENABLE_DIAGNOSTICS ON)
   set(ENABLE_DIGITAL ON)
   set(ENABLE_I2C ON)
+  set(ENABLE_MPU6050 ON)
   set(ENABLE_ONE_WIRE ON)
   set(ENABLE_SERVO ON)
   set(ENABLE_SONAR ON)
@@ -263,6 +267,7 @@ else()
   set(ENABLE_DIAGNOSTICS ON)
   set(ENABLE_DIGITAL ON)
   set(ENABLE_I2C ON)
+  set(ENABLE_MPU6050 ON)
   set(ENABLE_ONE_WIRE ON)
   set(ENABLE_SERVO ON)
   set(ENABLE_SONAR ON)
@@ -449,6 +454,24 @@ if (ENABLE_I2C)
   )
 endif()
 
+if (ENABLE_MPU6050)
+  include_directories(
+    libraries/i2cdevlib/Arduino/I2Cdev
+    libraries/i2cdevlib/Arduino/MPU6050
+  )
+  list(APPEND FIRMATA_SOURCES
+    src/firmata/firmata_mpu6050.cpp
+    libraries/i2cdevlib/Arduino/I2Cdev/I2Cdev.cpp
+    libraries/i2cdevlib/Arduino/MPU6050/MPU6050.cpp
+  )
+  list(APPEND FIRMATA_DEFINITIONS
+    -DENABLE_MPU6050
+  )
+  list(APPEND FIRMATA_LIBRARIES
+    Wire
+  )
+endif()
+
 if (ENABLE_SERVO)
   list(APPEND FIRMATA_SOURCES
     src/firmata/firmata_servo.cpp
@@ -547,6 +570,24 @@ if (ENABLE_I2C)
   )
   list(APPEND TELEMETRIX_DEFINITIONS
     -DENABLE_I2C=1
+  )
+  list(APPEND TELEMETRIX_LIBRARIES
+    Wire
+  )
+endif()
+
+if (ENABLE_MPU6050)
+  include_directories(
+    libraries/i2cdevlib/Arduino/I2Cdev
+    libraries/i2cdevlib/Arduino/MPU6050
+  )
+  list(APPEND TELEMETRIX_SOURCES
+    libraries/i2cdevlib/Arduino/I2Cdev/I2Cdev.cpp
+    libraries/i2cdevlib/Arduino/MPU6050/MPU6050.cpp
+    src/telemetrix/telemetrix_mpu6050.cpp
+  )
+  list(APPEND TELEMETRIX_DEFINITIONS
+    -DENABLE_MPU6050
   )
   list(APPEND TELEMETRIX_LIBRARIES
     Wire
