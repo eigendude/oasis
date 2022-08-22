@@ -64,7 +64,7 @@ elif HOSTNAME == "lenovo":
     ENABLE_VIDEO = False
 elif HOSTNAME == "netbook":
     ENABLE_DISPLAY = True
-    ENABLE_VIDEO = False
+    ENABLE_VIDEO = True
 elif HOSTNAME == "nuc":
     ENABLE_CEC = True
 
