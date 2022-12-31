@@ -573,6 +573,7 @@ endif()
 
 if (ENABLE_SONAR)
   list(APPEND TELEMETRIX_SOURCES
+    src/drivers/sonar.cpp
     src/telemetrix/telemetrix_sonar.cpp
   )
   list(APPEND TELEMETRIX_DEFINITIONS
