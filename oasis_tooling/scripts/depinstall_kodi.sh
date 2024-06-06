@@ -58,6 +58,7 @@ if [[ "${OSTYPE}" != "darwin"* ]]; then
     libcurl4-openssl-dev \
     libcwiid-dev \
     libdbus-1-dev \
+    libdisplay-info-dev \
     libdrm-dev \
     libegl1-mesa-dev \
     libenca-dev \

@@ -73,40 +73,6 @@ patch \
   || :
 
 #
-# Configure native depends
-#
-
-if [ ! -f "${KODI_DEPENDS_SRC}/Makefile.include" ]; then
-  (
-    cd "${KODI_DEPENDS_SRC}"
-    ./bootstrap
-    ./configure \
-      --prefix="${KODI_DEPENDS_DIR}" \
-      --disable-debug \
-      --with-rendersystem=${APP_RENDER_SYSTEM}
-  )
-fi
-
-#
-# Build native depends for target depends
-#
-
-make \
-  -C "${KODI_DEPENDS_SRC}/native" \
-  -j$(getconf _NPROCESSORS_ONLN) \
-  meson \
-  ninja \
-  python3 \
-
-#
-# Build libdisplay-info
-#
-
-make \
-  -C "${KODI_DEPENDS_SRC}/target/libdisplay-info" \
-  -j$(getconf _NPROCESSORS_ONLN)
-
-#
 # Configure Kodi
 #
 
@@ -145,6 +111,21 @@ make \
 
 echo "Installing Kodi..."
 make -C "${KODI_BUILD_DIR}" install
+
+#
+# Configure native depends
+#
+
+if [ ! -f "${KODI_DEPENDS_SRC}/Makefile.include" ]; then
+  (
+    cd "${KODI_DEPENDS_SRC}"
+    ./bootstrap
+    ./configure \
+      --prefix="${KODI_DEPENDS_DIR}" \
+      --disable-debug \
+      --with-rendersystem=${APP_RENDER_SYSTEM}
+  )
+fi
 
 #
 # Build native depends for add-ons
