@@ -38,6 +38,7 @@ if \
   [ "${HOSTNAME}" = "lenovo" ] || \
   [ "${HOSTNAME}" = "nuc" ] || \
   [ "${HOSTNAME}" = "patio" ] || \
+  [ "${HOSTNAME}" = "starship" ] || \
   [ "${HOSTNAME}" = "substation" ] || \
   [ "${HOSTNAME}" = "zotac" ] \
 ; then
